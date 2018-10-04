@@ -1,8 +1,15 @@
 language: node_js
 node_js:
-  - '8'
-  - '10'
-script:
-  npm run test-coverage
-after_success:
-  npm run coverage
+- '8'
+- '10'
+script: npm run test-coverage
+after_success: npm run coverage
+deploy:
+  provider: npm
+  email: scaldwell@gmail.com
+  api_key:
+    secure: ODle8t3KFedbwDvUIhpP0ZMkzKnelxFSdzM7Ne1gsXWudbJpnVgT9doPlZ3+jOOKqA73/sN8znMiboyC/Qj3cKXrgGa/SITXNUKPaChaUKaILk2KwQ+O3mkYDhr9PK1krEKQ/8h/muyiYS2B7jJ9itM3Sdipu3DYaAQwyrMNnN2wl/LrRiUjCnamf2EJr5WvlG2GhloLXqonScycbwm3NThc3Pxm2GJdiP/E1QCyjd6oB/AoPmpNepR9M5ADHHw82NTTMcd+Wm0yeZLCj2/8zQjQKnSfg31DAGQxKpVihJaqpE/+iIRyyqk2c5pJPNfZ/lFXlf1fBBJbbZTAIQEuiLrpqb5GpJBqieBSK6zrmMiyvxRJ67NaHDBzXr1TFNDD9aHQgEbXidBIVWsDvusZ92BqjJIwib90BUzm1DYz/3RGlntBT0UBvLFWl44B6sYFm3eX3ZbV1Kk0cHHqKzc7MKos/J6Wgp8rG9be5jYyKZQyh855iWJqGNUphbVV9wiIls+8xLKtaHi7h/UvSHmWP5e05ZO9ErN+CqsxJtaJBXQCbmn2zaxNWcrS+om22wnKATkmz83Q+8Mdem/6x49UwFKkQ/KvKj+ssp/iSsiy28kSgFjsDzMDfRIrsuaBpOndWi+JQuLokghmJXEF/fJyiv1M/uyZhWehIMQjDv8GBDo=
+  on:
+    tags: true
+    repo: stevecaldwell77/hebo-snapshot-repository-s3
+    node: '8'
