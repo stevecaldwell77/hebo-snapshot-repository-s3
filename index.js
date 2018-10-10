@@ -1,20 +1,45 @@
+const assert = require('assert');
+const isFunction = require('lodash/isFunction');
 const autoBind = require('auto-bind');
 const amazonS3URI = require('amazon-s3-uri');
 
 class SnapshotRepositoryS3 {
-    constructor({ s3Client, s3Path }) {
+    constructor({ s3Client, s3Path } = {}) {
+        assert(s3Client, 'SnapshotRepositoryS3: s3Client required');
+        assert(
+            isFunction(s3Client.getObject),
+            'SnapshotRepositoryS3: s3Client must provide getObject()',
+        );
+        assert(
+            isFunction(s3Client.putObject),
+            'SnapshotRepositoryS3: s3Client must provide putObject()',
+        );
+        assert(s3Path, 'SnapshotRepositoryS3: s3Path required');
+
+        let bucket;
+        let key;
+        try {
+            const parsedUri = amazonS3URI(s3Path);
+            bucket = parsedUri.bucket;
+            key = parsedUri.key;
+        } catch (err) {
+            throw new Error(`SnapshotRepositoryS3: invalid s3Path ${s3Path}`);
+        }
+
         this.s3Client = s3Client;
         this.s3Path = s3Path;
-        const { bucket, key } = amazonS3URI(s3Path);
         this.s3Bucket = bucket;
-        this.s3KeyPrefix = key.replace(/\/$/, '');
+        this.s3Key = key;
         autoBind(this);
     }
 
     getS3Location(aggregateName, aggregateId) {
+        const key = this.s3Key;
+        const trailingSlash = str => (str.match(/\/$/) ? str : `${str}/`);
+        const keyPrefix = key ? trailingSlash(key) : '';
         return {
             bucket: this.s3Bucket,
-            key: `${this.s3KeyPrefix}/${aggregateName}/${aggregateId}.json`,
+            key: `${keyPrefix}${aggregateName}/${aggregateId}.json`,
         };
     }
 
