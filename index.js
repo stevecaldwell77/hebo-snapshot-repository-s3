@@ -45,14 +45,20 @@ class SnapshotRepositoryS3 {
 
     async getSnapshot(aggregateName, aggregateId) {
         const { bucket, key } = this.getS3Location(aggregateName, aggregateId);
-        const response = await this.s3Client
-            .getObject({
-                Bucket: bucket,
-                Key: key,
-            })
-            .promise();
+        let response;
+        try {
+            response = await this.s3Client
+                .getObject({
+                    Bucket: bucket,
+                    Key: key,
+                })
+                .promise();
+        } catch (err) {
+            if (err.code === 'NoSuchKey') return undefined;
+            throw err;
+        }
         const { Body: body } = response;
-        return body ? JSON.parse(body) : undefined;
+        return JSON.parse(body);
     }
 
     async writeSnapshot(aggregateName, aggregateId, snapshot) {

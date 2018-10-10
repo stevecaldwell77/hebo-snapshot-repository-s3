@@ -1,3 +1,9 @@
+const noSuchKeyError = () => {
+    const error = new Error('NoSuchKey: The specified key does not exist.');
+    error.code = 'NoSuchKey';
+    return error;
+};
+
 const makeS3Client = () => {
     const buckets = {};
     const initBucket = bucket => {
@@ -15,9 +21,10 @@ const makeS3Client = () => {
         getObject: ({ Bucket: bucket, Key: key }) => ({
             promise: () => {
                 initBucket(bucket);
-                return Promise.resolve({
-                    Body: buckets[bucket][key],
-                });
+                const body = buckets[bucket][key];
+                return body
+                    ? Promise.resolve({ Body: body })
+                    : Promise.reject(noSuchKeyError());
             },
         }),
     };
