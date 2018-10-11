@@ -37,7 +37,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "fixpack": "^2.3.1",
     "hard-rejection": "^1.0.0",
-    "hebo": "^0.3.3",
+    "hebo-validation": "^1.1.0",
     "husky": "^1.1.1",
     "lint-staged": "^7.3.0",
     "minimist": "^1.2.0",
