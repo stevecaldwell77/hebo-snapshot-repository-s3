@@ -93,6 +93,10 @@
       "text"
     ]
   },
+  "peerDependencies": {
+    "aws-sdk": "^2.331.0",
+    "hebo": "^0.3.3"
+  },
   "prettier": {
     "singleQuote": true,
     "bracketSpacing": true,
