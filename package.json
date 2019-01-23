@@ -1,7 +1,7 @@
 {
   "name": "hebo-snapshot-repository-s3",
   "description": "Snapshot Repository implementation for hebo-js that uses AWS S3",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": "Steve Caldwell <scaldwell@gmail.com>",
   "ava": {
     "failFast": true,
