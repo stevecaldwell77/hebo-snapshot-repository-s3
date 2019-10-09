@@ -70,19 +70,17 @@
   ],
   "license": "MIT",
   "lint-staged": {
-    "linters": {
-      "*.js": [
-        "git add"
-      ],
-      "*.md": [
-        "remark . -qfo",
-        "git add"
-      ],
-      "package.json": [
-        "fixpack",
-        "git add"
-      ]
-    }
+    "*.js": [
+      "git add"
+    ],
+    "*.md": [
+      "remark . -qfo",
+      "git add"
+    ],
+    "package.json": [
+      "fixpack",
+      "git add"
+    ]
   },
   "main": "index.js",
   "nyc": {
