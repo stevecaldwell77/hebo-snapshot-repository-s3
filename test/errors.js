@@ -24,13 +24,13 @@ test('unexpected s3 errors propogated', async t => {
     });
 
     const bookId = shortid.generate();
-    await t.notThrows(
+    await t.notThrowsAsync(
         repo.getSnapshot('book', bookId),
         'NoSuchKey S3 error handled',
     );
 
     const authorId = shortid.generate();
-    await t.throws(
+    await t.throwsAsync(
         repo.getSnapshot('author', authorId),
         /something went wrong/,
         'Unexpected S3 error propagated',

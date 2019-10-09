@@ -5,7 +5,14 @@
   "author": "Steve Caldwell <scaldwell@gmail.com>",
   "ava": {
     "failFast": true,
-    "verbose": true
+    "verbose": true,
+    "files": [
+      "test/**/*"
+    ],
+    "helpers": [
+      "**/helpers/**/*",
+      "**/fixtures/**/*"
+    ]
   },
   "bugs": {
     "url": "https://github.com/stevecaldwell77/hebo-snapshot-repository-s3/issues",
@@ -27,7 +34,7 @@
   "devDependencies": {
     "@commitlint/cli": "^7.2.0",
     "@commitlint/config-conventional": "^7.1.2",
-    "ava": "^0.25.0",
+    "ava": "^2.4.0",
     "aws-sdk": "^2.331.0",
     "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
