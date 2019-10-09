@@ -24,7 +24,8 @@ class SnapshotRepositoryS3 {
             const parsedUri = amazonS3URI(s3Path);
             bucket = parsedUri.bucket;
             key = parsedUri.key;
-        } catch {
+            // eslint-disable-next-line no-unused-vars
+        } catch (error) {
             throw new Error(`SnapshotRepositoryS3: invalid s3Path ${s3Path}`);
         }
 
