@@ -1,8 +1,8 @@
 const test = require('ava');
 const shortid = require('shortid');
 const { validateSnapshotRepository } = require('hebo-validation');
-const SnapshotRepositoryS3 = require('..');
 const makeS3Client = require('./helpers/s3-client');
+const SnapshotRepositoryS3 = require('..');
 
 const makeRepo = () =>
     new SnapshotRepositoryS3({
@@ -20,7 +20,7 @@ test('writeSnapshot(), getSnapshot()', async t => {
     const repo = makeRepo();
     const bookId = shortid.generate();
 
-    t.deepEqual(
+    t.is(
         await repo.getSnapshot('book', bookId),
         undefined,
         'getSnapshot returns undefined if no snapshot exists',
@@ -46,13 +46,13 @@ test('writeSnapshot(), getSnapshot()', async t => {
         'getSnapshot() finds snapshot stored by writeSnapshot()',
     );
 
-    t.deepEqual(
+    t.is(
         await repo.getSnapshot('book', shortid.generate()),
         undefined,
         'getSnapshot() respects aggregate ID',
     );
 
-    t.deepEqual(
+    t.is(
         await repo.getSnapshot('author', bookId),
         undefined,
         'getSnapshot() respects aggregate name',

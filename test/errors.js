@@ -13,6 +13,7 @@ test('unexpected s3 errors propogated', async t => {
                     error.code = 'NoSuchKey';
                     throw error;
                 }
+
                 throw new Error('something went wrong');
             },
         }),

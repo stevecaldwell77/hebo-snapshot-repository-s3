@@ -1,7 +1,7 @@
 const test = require('ava');
 const shortid = require('shortid');
-const SnapshotRepositoryS3 = require('..');
 const makeS3Client = require('./helpers/s3-client');
+const SnapshotRepositoryS3 = require('..');
 
 const runTest = async (s3Path, t) => {
     const bookId = shortid.generate();

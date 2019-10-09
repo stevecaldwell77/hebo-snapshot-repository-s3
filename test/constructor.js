@@ -1,7 +1,7 @@
 const test = require('ava');
 const { noop } = require('lodash');
-const SnapshotRepositoryS3 = require('..');
 const makeS3Client = require('./helpers/s3-client');
+const SnapshotRepositoryS3 = require('..');
 
 test('constructor - no params', t => {
     t.throws(() => new SnapshotRepositoryS3(), Error, 'no params throws error');

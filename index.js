@@ -3,6 +3,8 @@ const isFunction = require('lodash/isFunction');
 const autoBind = require('auto-bind');
 const amazonS3URI = require('amazon-s3-uri');
 
+const addTrailingSlash = str => (str.match(/\/$/) ? str : `${str}/`);
+
 class SnapshotRepositoryS3 {
     constructor({ s3Client, s3Path } = {}) {
         assert(s3Client, 'SnapshotRepositoryS3: s3Client required');
@@ -22,7 +24,7 @@ class SnapshotRepositoryS3 {
             const parsedUri = amazonS3URI(s3Path);
             bucket = parsedUri.bucket;
             key = parsedUri.key;
-        } catch (err) {
+        } catch {
             throw new Error(`SnapshotRepositoryS3: invalid s3Path ${s3Path}`);
         }
 
@@ -35,8 +37,7 @@ class SnapshotRepositoryS3 {
 
     getS3Location(aggregateName, aggregateId) {
         const key = this.s3Key;
-        const trailingSlash = str => (str.match(/\/$/) ? str : `${str}/`);
-        const keyPrefix = key ? trailingSlash(key) : '';
+        const keyPrefix = key ? addTrailingSlash(key) : '';
         return {
             bucket: this.s3Bucket,
             key: `${keyPrefix}${aggregateName}/${aggregateId}.json`,
@@ -53,10 +54,11 @@ class SnapshotRepositoryS3 {
                     Key: key,
                 })
                 .promise();
-        } catch (err) {
-            if (err.code === 'NoSuchKey') return undefined;
-            throw err;
+        } catch (error) {
+            if (error.code === 'NoSuchKey') return undefined;
+            throw error;
         }
+
         const { Body: body } = response;
         return JSON.parse(body);
     }

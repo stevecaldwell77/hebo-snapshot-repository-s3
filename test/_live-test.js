@@ -3,8 +3,8 @@
 node _live-test.js --s3-path s3://path/to/somewhere
 
 */
-const AWS = require('aws-sdk');
 const assert = require('assert');
+const AWS = require('aws-sdk');
 const amazonS3URI = require('amazon-s3-uri');
 const hardRejection = require('hard-rejection');
 const parseArgs = require('minimist');
@@ -19,7 +19,7 @@ assert(s3Path, 'must specify --s3-path');
 
 try {
     amazonS3URI(s3Path);
-} catch (err) {
+} catch {
     throw new Error(`Invalid s3Path ${s3Path}`);
 }
 
@@ -54,6 +54,8 @@ const runTest = async s3Path => {
 
 const stringifyLocation = ({ bucket, key }) => `s3://${bucket}/${key}`;
 
-runTest(s3Path).then(s3Location =>
-    console.log(`check ${stringifyLocation(s3Location)}`),
-);
+runTest(s3Path)
+    .then(s3Location => console.log(`check ${stringifyLocation(s3Location)}`))
+    .catch(error => {
+        throw error;
+    });

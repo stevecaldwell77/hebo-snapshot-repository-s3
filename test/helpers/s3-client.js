@@ -9,6 +9,7 @@ const makeS3Client = () => {
     const initBucket = bucket => {
         buckets[bucket] = buckets[bucket] || {};
     };
+
     return {
         buckets: {},
         putObject: ({ Body: body, Bucket: bucket, Key: key }) => ({
